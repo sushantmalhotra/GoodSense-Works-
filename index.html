@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face {
+            font-family: 'General Sans';
+            src: url('general-sans/GeneralSans-Light.otf') format('opentype');
+            font-weight: 300;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('white and red.png');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                repeating-linear-gradient(to right, #ffffff 0, #ffffff 0.5px, transparent 0.5px, transparent 200px),
+                repeating-linear-gradient(to bottom, #ffffff 0, #ffffff 0.5px, transparent 0.5px, transparent 200px);
+            opacity: 0.4;
+            mix-blend-mode: difference;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero {
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        .content {
+            height: 360vh;
+            height: 360dvh;
+        }
+
+        .sketch {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            height: 100vh;
+            width: auto;
+            opacity: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .path-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 380px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 0;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .logo {
+            position: fixed;
+            left: 50%;
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            color: white;
+            letter-spacing: -0.07em;
+            margin: 0;
+            white-space: nowrap;
+            transform: translateX(-50%);
+            mix-blend-mode: difference;
+            z-index: 2;
+        }
+
+        .nav-side {
+            position: fixed;
+            top: 55px;
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.4rem;
+            letter-spacing: -0.02em;
+            color: white;
+            mix-blend-mode: difference;
+            white-space: nowrap;
+            z-index: 2;
+            opacity: 0;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-item {
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .logo-link {
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-line1,
+        .logo-line2 {
+            display: inline;
+        }
+
+        .nav-left {
+            left: 48px;
+        }
+
+        .nav-right {
+            right: 48px;
+        }
+
+        .nav-side.visible {
+            opacity: 1;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 40px;
+            right: 24px;
+            width: 44px;
+            height: 44px;
+            background: #111;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .mobile-menu-btn.visible {
+            opacity: 1;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: #fff;
+        }
+
+        .mobile-menu-card {
+            position: fixed;
+            top: 94px;
+            right: 24px;
+            width: 180px;
+            background: #111;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            opacity: 0;
+            transform: translateY(-6px) scale(0.96);
+            transform-origin: top right;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .mobile-menu-card.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .mobile-menu-card a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: -0.01em;
+            padding: 10px 6px;
+            border-bottom: 1px solid #333;
+        }
+
+        .mobile-menu-card a:last-child {
+            border-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden;
+            }
+
+            .bg {
+                background-image: url('white and red9:16.png');
+            }
+
+            .path-image {
+                width: 72vw;
+                height: 40.5vw;
+            }
+
+            .content {
+                height: 440vh;
+                height: 440dvh;
+            }
+
+            .grid {
+                background-size: 20vw 20vw;
+                background-image:
+                    repeating-linear-gradient(to right, #ffffff 0, #ffffff 0.5px, transparent 0.5px, transparent 20vw),
+                    repeating-linear-gradient(to bottom, #ffffff 0, #ffffff 0.5px, transparent 0.5px, transparent 20vw);
+            }
+
+            .logo {
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 0px;
+                line-height: 1;
+                box-sizing: border-box;
+                width: 100%;
+                text-align: center;
+            }
+
+            .logo-line1,
+            .logo-line2 {
+                display: block;
+                line-height: 1;
+            }
+
+            .logo-line2 {
+                margin-top: -6px;
+            }
+
+            .nav-side {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+
+        .main-section {
+            position: relative;
+            background: white;
+            z-index: 1;
+            transition: background-color 0.6s ease;
+        }
+
+        .main-section.inverted {
+            background-color: #111;
+        }
+
+        .work {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 2.5rem;
+            padding: 6rem 48px;
+        }
+
+        .work ::selection {
+            background-color: #c6ff00;
+            color: #111;
+        }
+
+        .work p {
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.6rem;
+            letter-spacing: -0.02em;
+            line-height: 1.4;
+            color: #bbb;
+            text-align: left;
+            margin: 0;
+            max-width: 700px;
+        }
+
+        .work p .char.typed {
+            color: #000;
+            transition: color 0.08s linear;
+        }
+
+        .main-section.inverted .work p .char.typed {
+            color: #fff;
+        }
+
+        @media (min-width: 769px) {
+            .work-pin {
+                position: relative;
+                height: 180vh;
+            }
+
+            .work {
+                position: sticky;
+                top: 0;
+                height: 100vh;
+                overflow: hidden;
+                background: #fff;
+                transition: background-color 0.6s ease;
+            }
+
+            .main-section.inverted .work {
+                background-color: #111;
+            }
+
+            .work-gallery {
+                overflow: hidden;
+                overflow-x: hidden;
+            }
+
+            .work-gallery-track {
+                align-items: center;
+                will-change: transform;
+            }
+        }
+
+        .work-gallery-wrap {
+            position: relative;
+            width: 100%;
+        }
+
+        .work-gallery {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            overflow-anchor: none;
+        }
+
+        .work-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .work-gallery-track {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .work-item {
+            position: relative;
+            flex: 0 0 auto;
+            width: 36vw;
+            aspect-ratio: 16 / 9;
+            display: block;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .scroll-hint {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #999;
+            transition: color 0.6s ease;
+        }
+
+        .main-section.inverted .scroll-hint {
+            color: #666;
+        }
+
+        .scroll-hint svg {
+            width: 18px;
+            height: 10px;
+            animation: scroll-hint-nudge 1.6s ease-in-out infinite;
+        }
+
+        @keyframes scroll-hint-nudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(6px); }
+        }
+
+        @media (max-width: 768px) {
+            .work-gallery-wrap {
+                margin: 0 -48px;
+                width: 100vw;
+            }
+
+            .work-gallery {
+                scroll-snap-type: x mandatory;
+            }
+
+            .work-gallery-track {
+                gap: 1rem;
+                padding: 0 4vw;
+            }
+
+            .work-item {
+                width: 92vw;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+            }
+        }
+
+        .work-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .work-item .view-project {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.3rem;
+            letter-spacing: -0.02em;
+            color: white;
+            background: rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .work-item:hover .view-project,
+        .work-item.active .view-project {
+            opacity: 1;
+        }
+
+        .capabilities {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+            padding: 4rem 48px;
+        }
+
+        .capabilities h2 {
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #999;
+            margin: 0 0 2rem 0;
+            transition: color 0.6s ease;
+        }
+
+        .main-section.inverted .capabilities h2 {
+            color: #666;
+        }
+
+        .capability-cards {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .capability-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            padding: 2.25rem 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.12);
+            cursor: default;
+            transition: border-color 0.6s ease;
+        }
+
+        .main-section.inverted .capabilities .capability-card {
+            border-top-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .capability-cards .capability-card:last-child {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+            transition: border-color 0.6s ease;
+        }
+
+        .main-section.inverted .capabilities .capability-cards .capability-card:last-child {
+            border-bottom-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .capability-number {
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1rem;
+            color: #999;
+            width: 2.5rem;
+            flex-shrink: 0;
+            transition: color 0.6s ease;
+        }
+
+        .main-section.inverted .capabilities .capability-number {
+            color: #666;
+        }
+
+        .capability-card-content {
+            flex: 1;
+        }
+
+        .capability-title {
+            display: block;
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.8rem;
+            letter-spacing: -0.03em;
+            color: #111;
+            margin: 0 0 0.75rem 0;
+            transition: color 0.6s ease;
+        }
+
+        .main-section.inverted .capabilities .capability-title {
+            color: #fff;
+        }
+
+        .capability-desc {
+            max-height: 0;
+            overflow: hidden;
+            margin: 0;
+            font-family: 'General Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 300;
+            letter-spacing: -0.01em;
+            line-height: 1.5;
+            color: #555;
+            transition: max-height 0.4s ease, color 0.6s ease;
+        }
+
+        .main-section.inverted .capabilities .capability-desc {
+            color: #ccc;
+        }
+
+        .capability-card:hover .capability-desc,
+        .capability-card.active .capability-desc {
+            max-height: 8rem;
+        }
+
+        .capability-desc .char.typed {
+            color: #111;
+            transition: color 0.08s linear;
+        }
+
+        .main-section.inverted .capabilities .capability-desc .char.typed {
+            color: #fff;
+        }
+
+        .capability-image {
+            width: 10rem;
+            height: 7rem;
+            flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .capabilities {
+                padding: 3rem 24px;
+                gap: 0.5rem;
+            }
+
+            .capabilities h2 {
+                font-size: 0.9rem;
+                margin: 0 0 1.25rem 0;
+            }
+
+            .capability-card {
+                flex-wrap: wrap;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1.5rem 0;
+            }
+
+            .capability-number {
+                width: auto;
+                font-size: 0.85rem;
+            }
+
+            .capability-card-content {
+                flex: 1 1 calc(100% - 3.5rem);
+                min-width: 0;
+            }
+
+            .capability-title {
+                font-size: 1.3rem;
+                margin: 0 0 0.5rem 0;
+            }
+
+            .capability-desc {
+                font-size: 0.9rem;
+            }
+
+            .capability-card:hover .capability-desc,
+            .capability-card.active .capability-desc {
+                max-height: 10rem;
+            }
+
+            .capability-image {
+                display: none;
+            }
+        }
+
+        .contact-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 3rem;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 3rem;
+            letter-spacing: -0.03em;
+            margin: 0 0 3rem;
+            color: #000;
+            transition: color 0.6s ease;
+        }
+
+        .main-section.inverted .contact-section h2 {
+            color: #fff;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 32rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #000;
+            padding: 0.6rem 0;
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: #000;
+            outline: none;
+            transition: color 0.6s ease, border-color 0.6s ease;
+        }
+
+        .main-section.inverted .contact-section .contact-form input,
+        .main-section.inverted .contact-section .contact-form textarea {
+            color: #fff;
+            border-bottom: 1px solid #fff;
+        }
+
+        .contact-form textarea {
+            resize: none;
+            height: 5rem;
+        }
+
+        .contact-form button {
+            margin-top: 1rem;
+            background: transparent;
+            border: 1px solid #000;
+            padding: 0.8rem;
+            font-family: 'General Sans', sans-serif;
+            font-weight: 300;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: #000;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .main-section.inverted .contact-section .contact-form button {
+            color: #fff;
+            border: 1px solid #fff;
+        }
+
+        .main-section.inverted .contact-section .contact-form button:hover {
+            background-color: #fff;
+            color: #111;
+        }
+
+        .nav-side .cursor {
+            opacity: 1;
+            animation: blink 1s steps(1) infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="grid"></div>
+    <div class="hero"></div>
+    <h1 class="logo"><a href="#" class="logo-link"><span class="logo-line1">GoodSense</span> <span class="logo-line2">Works.</span></a></h1>
+    <div class="nav-side nav-left">
+        <a class="nav-item" href="#work" data-text="Work"></a>
+        <a class="nav-item" href="#capabilities" data-text="Capabilities"></a>
+    </div>
+    <div class="nav-side nav-right">
+        <a class="nav-item" href="#" data-text="Let's Talk ↗"></a>
+    </div>
+    <div class="mobile-menu-btn" id="mobileMenuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="mobile-menu-card" id="mobileMenuCard">
+        <a href="#work">Work</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#contact">Let's Talk</a>
+    </div>
+    <svg class="sketch" xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+        <path id="travel-path" d="M 2030.59 -70.325 C 2030.59 -70.325 1052.508 673.325 1052.508 673.325 C 1052.508 673.325 1407.999 436.971 1050.586 498.461 C 693.173 559.952 -275.301 1270.935 -275.301 1270.935" fill="none" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+        <path id="travel-path-mobile" d="M 1498.045 337.736 L 540 337.736 L 540 1672.898" fill="none" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+    <img class="path-image" src="images/PhotographerDesktop.png" alt="">
+    <img class="path-image" src="images/storedesktopview.png" alt="">
+    <img class="path-image" src="images/BasilicaDesktop.png" alt="">
+    <img class="path-image" src="images/WanderlustDesktop.png" alt="">
+    <img class="path-image" src="images/Alora.png" alt="">
+    <div class="content"></div>
+    <section class="main-section" id="work">
+        <div class="work-pin" id="workPin">
+        <div class="work">
+            <p class="work-text" data-text="At GoodSense Works, we believe good design goes beyond aesthetics. It's about understanding what makes a business unique and expressing its character, values and ambitions with intention. Through thoughtful design and digital experiences, we help businesses stand apart and make a lasting impression."></p>
+            <div class="work-gallery-wrap">
+                <div class="work-gallery" id="workGallery">
+                <div class="work-gallery-track" id="workGalleryTrack">
+                    <a class="work-item" href="https://sushantmalhotra.github.io/Photography-Portfolio/photographer.html" target="_blank" rel="noopener">
+                        <img src="images/PhotographerDesktop.png" alt="">
+                        <span class="view-project">View Project</span>
+                    </a>
+                    <a class="work-item" href="https://sushantmalhotra.github.io/decorestore/" target="_blank" rel="noopener">
+                        <img src="images/storedesktopview.png" alt="">
+                        <span class="view-project">View Project</span>
+                    </a>
+                    <a class="work-item" href="https://sushantmalhotra.github.io/Basilica/" target="_blank" rel="noopener">
+                        <img src="images/BasilicaDesktop.png" alt="">
+                        <span class="view-project">View Project</span>
+                    </a>
+                    <a class="work-item" href="#">
+                        <img src="images/WanderlustDesktop.png" alt="">
+                        <span class="view-project">View Project</span>
+                    </a>
+                    <a class="work-item" href="https://sushantmalhotra.github.io/Alora/" target="_blank" rel="noopener">
+                        <img src="images/Alora.png" alt="">
+                        <span class="view-project">View Project</span>
+                    </a>
+                </div>
+                </div>
+            </div>
+            <div class="scroll-hint">
+                Scroll
+                <svg viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 5H17M17 5L13 1M17 5L13 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+        </div>
+        <div class="capabilities" id="capabilities">
+            <h2>Capabilities</h2>
+            <div class="capability-cards">
+                <div class="capability-card">
+                    <span class="capability-number">01</span>
+                    <div class="capability-card-content">
+                        <span class="capability-title">Brand Identity</span>
+                        <p class="capability-desc" data-text="Logos, visual systems and guidelines that give a business a distinct, consistent presence everywhere it shows up."></p>
+                    </div>
+                    <div class="capability-image" style="background-image: url('https://images.unsplash.com/photo-1763705857736-2b4f16a33758?q=80&w=1200&auto=format&fit=crop')"></div>
+                </div>
+                <div class="capability-card">
+                    <span class="capability-number">02</span>
+                    <div class="capability-card-content">
+                        <span class="capability-title">Web Design & Development</span>
+                        <p class="capability-desc" data-text="Fast, thoughtful websites built to reflect the brand and convert visitors into customers."></p>
+                    </div>
+                    <div class="capability-image" style="background-image: url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1200&auto=format&fit=crop')"></div>
+                </div>
+                <div class="capability-card">
+                    <span class="capability-number">03</span>
+                    <div class="capability-card-content">
+                        <span class="capability-title">Digital Experience</span>
+                        <p class="capability-desc" data-text="Interfaces and interactions designed around how people actually use a product, end to end."></p>
+                    </div>
+                    <div class="capability-image" style="background-image: url('https://images.unsplash.com/photo-1767449441925-737379bc2c4d?q=80&w=1200&auto=format&fit=crop')"></div>
+                </div>
+                <div class="capability-card">
+                    <span class="capability-number">04</span>
+                    <div class="capability-card-content">
+                        <span class="capability-title">Art Direction</span>
+                        <p class="capability-desc" data-text="Photography, motion and visual tone guided with intention across every touchpoint."></p>
+                    </div>
+                    <div class="capability-image" style="background-image: url('https://images.unsplash.com/photo-1762504013915-c1faf57f291b?q=80&w=1200&auto=format&fit=crop')"></div>
+                </div>
+                <div class="capability-card">
+                    <span class="capability-number">05</span>
+                    <div class="capability-card-content">
+                        <span class="capability-title">Strategy & Positioning</span>
+                        <p class="capability-desc" data-text="Clarifying what a business stands for and how it should be perceived in its market."></p>
+                    </div>
+                    <div class="capability-image" style="background-image: url('https://images.unsplash.com/photo-1532622785990-d2c36a76f5a6?q=80&w=1200&auto=format&fit=crop')"></div>
+                </div>
+            </div>
+        </div>
+        <div class="contact-section" id="contact">
+            <h2>Let's Talk</h2>
+            <form class="contact-form">
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <textarea name="message" placeholder="Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
+        // Safari (and some other browsers) can restore a previous scroll
+        // position on "pageshow" (bfcache restores, same-session reloads)
+        // even after the checks above. Force back to the top whenever
+        // that fires too.
+        window.addEventListener('pageshow', () => {
+            window.scrollTo(0, 0);
+        });
+
+        const logo = document.querySelector('.logo');
+        const bg = document.querySelector('.bg');
+        const isMobile = window.innerWidth <= 768;
+        const path = document.querySelector(isMobile ? '#travel-path-mobile' : '#travel-path');
+        const pathViewWidth = isMobile ? 1080 : 1920;
+        const pathViewHeight = isMobile ? 1920 : 1080;
+        const mobilePathShiftY = 60;
+        const mobileStackGap = 400;
+        const mobileVerticalStart = 1498.045 - 540;
+        const images = Array.from(document.querySelectorAll('.path-image'));
+        const navLeft = document.querySelector('.nav-left');
+        const navRight = document.querySelector('.nav-right');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenuCard = document.getElementById('mobileMenuCard');
+        const workText = document.querySelector('.work-text');
+        const mainSection = document.querySelector('.main-section');
+
+        let navRevealed = false;
+
+        function buildChars(el) {
+            const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+            const textNodes = [];
+            while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+            textNodes.forEach((textNode) => {
+                const frag = document.createDocumentFragment();
+                textNode.textContent.split('').forEach((ch) => {
+                    const span = document.createElement('span');
+                    span.className = 'char';
+                    span.textContent = ch;
+                    frag.appendChild(span);
+                });
+                textNode.parentNode.replaceChild(frag, textNode);
+            });
+
+            return el.querySelectorAll('.char');
+        }
+
+        function setupTypewriter(el) {
+            el.textContent = el.dataset.text;
+            const chars = buildChars(el);
+            let typed = false;
+
+            function typeText() {
+                if (typed) return;
+                typed = true;
+                let i = 0;
+                const interval = setInterval(() => {
+                    chars[i].classList.add('typed');
+                    i++;
+                    if (i >= chars.length) clearInterval(interval);
+                }, 18);
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        typeText();
+                        observer.disconnect();
+                    }
+                });
+            }, { threshold: 0.3, rootMargin: '0px 0px -15% 0px' });
+
+            observer.observe(el);
+        }
+
+        setupTypewriter(workText);
+
+        const isTouchDevice = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
+
+        function setupHoverTypewriter(card) {
+            const desc = card.querySelector('.capability-desc');
+            desc.textContent = desc.dataset.text;
+            const chars = buildChars(desc);
+            let typed = false;
+
+            function playTypewriter() {
+                if (typed) return;
+                typed = true;
+                let i = 0;
+                const interval = setInterval(() => {
+                    chars[i].classList.add('typed');
+                    i++;
+                    if (i >= chars.length) clearInterval(interval);
+                }, 14);
+            }
+
+            card.addEventListener('mouseenter', playTypewriter);
+
+            if (isTouchDevice) {
+                card.addEventListener('click', (e) => {
+                    const alreadyActive = card.classList.contains('active');
+                    document.querySelectorAll('.capability-card.active').forEach((c) => {
+                        if (c !== card) c.classList.remove('active');
+                    });
+                    card.classList.toggle('active', !alreadyActive);
+                    if (!alreadyActive) playTypewriter();
+                });
+            }
+        }
+
+        document.querySelectorAll('.capability-card').forEach(setupHoverTypewriter);
+
+        if (isTouchDevice) {
+            document.querySelectorAll('.work-item').forEach((item) => {
+                item.addEventListener('click', (e) => {
+                    if (!item.classList.contains('active')) {
+                        e.preventDefault();
+                        document.querySelectorAll('.work-item.active').forEach((el) => el.classList.remove('active'));
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.work-item')) {
+                    document.querySelectorAll('.work-item.active').forEach((el) => el.classList.remove('active'));
+                }
+            });
+        }
+
+        function typeWrite(el, text, speed = 35) {
+            el.textContent = '';
+            let i = 0;
+            const cursor = document.createElement('span');
+            cursor.className = 'cursor';
+            cursor.textContent = '|';
+
+            function step() {
+                el.textContent = text.slice(0, i);
+                el.appendChild(cursor);
+                i++;
+                if (i <= text.length) {
+                    setTimeout(step, speed);
+                } else {
+                    cursor.remove();
+                }
+            }
+            step();
+        }
+
+        function revealNav() {
+            if (navRevealed) return;
+            navRevealed = true;
+            navLeft.classList.add('visible');
+            navRight.classList.add('visible');
+            mobileMenuBtn.classList.add('visible');
+
+            const leftItems = navLeft.querySelectorAll('.nav-item');
+            const rightItems = navRight.querySelectorAll('.nav-item');
+
+            leftItems.forEach((el, i) => {
+                setTimeout(() => typeWrite(el, el.dataset.text), i * 300);
+            });
+            rightItems.forEach((el) => typeWrite(el, el.dataset.text));
+        }
+
+        mobileMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileMenuCard.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuCard.contains(e.target) && e.target !== mobileMenuBtn) {
+                mobileMenuCard.classList.remove('open');
+            }
+        });
+
+        mobileMenuCard.querySelectorAll('a').forEach((link) => {
+            link.addEventListener('click', () => mobileMenuCard.classList.remove('open'));
+        });
+
+        const startSize = isMobile ? 21 : 13.4;
+        const endSize = isMobile ? 11 : 3.5;
+        const startBottom = isMobile ? 16 : 0;
+        const endTop = isMobile ? 18 : 24;
+        const pathLength = path.getTotalLength();
+        const stagger = isMobile ? 0.22 : 0.08;
+        const span = 1 - (images.length - 1) * stagger;
+
+        function findLengthForY(targetY) {
+            let lo = 0, hi = pathLength;
+            for (let n = 0; n < 24; n++) {
+                const mid = (lo + hi) / 2;
+                if (path.getPointAtLength(mid).y < targetY) lo = mid;
+                else hi = mid;
+            }
+            return (lo + hi) / 2;
+        }
+
+        function update() {
+            const phase1Range = window.innerHeight;
+            const phase2Range = window.innerHeight * 3;
+            const progress = Math.min(Math.max(window.scrollY / phase1Range, 0), 1);
+            const size = startSize + (endSize - startSize) * progress;
+            logo.style.fontSize = size + 'vw';
+
+            const height = logo.offsetHeight;
+            const startTop = window.innerHeight - startBottom - height;
+            const top = startTop + (endTop - startTop) * progress;
+            logo.style.top = top + 'px';
+
+            bg.style.filter = `invert(${progress * 100}%)`;
+
+            const progress2 = Math.min(Math.max((window.scrollY - phase1Range) / phase2Range, 0), 1);
+
+            const scaleX = window.innerWidth / pathViewWidth;
+            const scaleY = window.innerHeight / pathViewHeight;
+
+            let maxLenEnd = pathLength;
+            let lengthGap = 0;
+            const lastIndex = images.length - 1;
+            if (isMobile) {
+                const cardHeight = window.innerWidth * 0.405;
+                const targetYpx = window.innerHeight - 10 - cardHeight;
+                const targetPathY = (targetYpx - mobilePathShiftY) / scaleY;
+                maxLenEnd = findLengthForY(targetPathY);
+                // Spread evenly across however many images there are, falling back to
+                // the fixed gap only when there's room to spare (fewer than 4 images).
+                const evenGap = lastIndex > 0 ? (maxLenEnd - mobileVerticalStart) / lastIndex : 0;
+                lengthGap = lastIndex > 0 ? Math.min(mobileStackGap / scaleY, evenGap) : 0;
+            }
+
+            images.forEach((img, i) => {
+                const localStart = i * stagger;
+                const localT = Math.min(Math.max((progress2 - localStart) / span, 0), 1);
+
+                let len = localT * pathLength;
+                if (isMobile) {
+                    const maxLen = maxLenEnd - (lastIndex - i) * lengthGap;
+                    len = Math.min(len, maxLen);
+                }
+
+                const point = path.getPointAtLength(len);
+                img.style.left = (point.x * scaleX) + 'px';
+                img.style.top = (point.y * scaleY) + (isMobile ? mobilePathShiftY : 0) + 'px';
+
+                let opacity = 1;
+                if (localT < 0.08) opacity = localT / 0.08;
+                if (!isMobile && localT > 0.92) opacity = (1 - localT) / 0.08;
+                if (progress2 <= 0 || (!isMobile && progress2 >= 1)) opacity = 0;
+                img.style.opacity = Math.max(0, Math.min(1, opacity));
+            });
+
+            const invertThreshold = mainSection.offsetTop - window.innerHeight / 2;
+            const shouldInvert = window.scrollY >= invertThreshold;
+            mainSection.classList.toggle('inverted', shouldInvert);
+        }
+
+        window.addEventListener('scroll', update);
+        window.addEventListener('resize', update);
+        window.addEventListener('load', update);
+        update();
+        revealNav();
+
+        // --- Work gallery scroll-jack (desktop only) ---------------------
+        // Pins the Work section while the user keeps scrolling down, and
+        // during that pin, slides the 5-image track from image 1
+        // (PhotographerDesktop.png) through to image 5 (Alora.png).
+        // Mobile is untouched: it keeps its native touch horizontal scroll.
+        (function setupWorkGalleryDesktop() {
+            if (isMobile) return;
+
+            const pin = document.getElementById('workPin');
+            const viewport = document.getElementById('workGallery');
+            const track = document.getElementById('workGalleryTrack');
+
+            function getMaxScroll() {
+                return Math.max(0, track.scrollWidth - viewport.clientWidth);
+            }
+
+            function sizePin() {
+                pin.style.height = (window.innerHeight + getMaxScroll()) + 'px';
+            }
+
+            function render() {
+                const maxScroll = getMaxScroll();
+                // pin.offsetTop is relative to its offsetParent (.main-section,
+                // which is position:relative), not the page - so it is NOT the
+                // real scroll position of the pin. Use getBoundingClientRect()
+                // + the current scroll to get its true document-relative top.
+                const pinTop = pin.getBoundingClientRect().top + window.scrollY;
+                const scrollableRange = pin.offsetHeight - window.innerHeight;
+
+                let traveled = window.scrollY - pinTop;
+                traveled = Math.max(0, Math.min(traveled, scrollableRange));
+
+                const progress = scrollableRange > 0 ? traveled / scrollableRange : 0;
+                track.style.transform = `translateX(${-progress * maxScroll}px)`;
+            }
+
+            function refresh() {
+                sizePin();
+                render();
+            }
+
+            window.addEventListener('scroll', render, { passive: true });
+            window.addEventListener('resize', refresh);
+            window.addEventListener('load', refresh);
+
+            refresh();
+        })();
+
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function smoothScrollTo(targetY, duration = 1400) {
+            const startY = window.scrollY;
+            const diff = targetY - startY;
+            const startTime = performance.now();
+
+            function step(now) {
+                const elapsed = now - startTime;
+                const t = Math.min(elapsed / duration, 1);
+                window.scrollTo(0, startY + diff * easeInOutCubic(t));
+                if (t < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+            link.addEventListener('click', (e) => {
+                const id = link.getAttribute('href').slice(1);
+                const target = id ? document.getElementById(id) : document.body;
+                const targetY = id ? target.getBoundingClientRect().top + window.scrollY : 0;
+                e.preventDefault();
+                smoothScrollTo(targetY);
+            });
+        });
+
+    </script>
+</body>
+</html>
